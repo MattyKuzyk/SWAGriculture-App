@@ -17,12 +17,4 @@
         android:layout_centerHorizontal="true"
         android:onClick="scanQR" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/QRResult"
-        android:layout_above="@+id/QRButton"
-        android:layout_centerHorizontal="true" />
-
 </RelativeLayout>
