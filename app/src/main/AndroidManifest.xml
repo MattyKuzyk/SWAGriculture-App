@@ -33,6 +33,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".QRScanner"
+            android:label="QRScanner" >
+            <intent-filter>
+                <action android:name="android.intent.action.QRScanner" />
+            </intent-filter>
+        </activity>
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>

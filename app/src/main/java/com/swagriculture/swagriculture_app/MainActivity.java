@@ -1,9 +1,12 @@
 package com.swagriculture.swagriculture_app;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -34,5 +37,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void scanQR(View view){
+        TextView tvResult=(TextView)findViewById(R.id.QRResult);
+        tvResult.setText("HELLO WORLD");
+
+        Intent intent = new Intent(this, QRScanner.class);
+        startActivity(intent);
+
     }
 }
