@@ -21,7 +21,6 @@ public class SendPostRequestTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     public Integer doInBackground(String... params) {
-        // TODO: refactor - put in separate class. Figure out how to do without deprecated classes
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost("http://swagriculture.parseapp.com/trap");
