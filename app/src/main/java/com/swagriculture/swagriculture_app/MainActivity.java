@@ -74,9 +74,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     }
 
     public void scanQR(View view){
-        TextView tvResult=(TextView)findViewById(R.id.QRResult);
-        tvResult.setText("HELLO WORLD");
-
         Intent intent = new Intent(this, QRScanner.class);
         startActivity(intent);
 

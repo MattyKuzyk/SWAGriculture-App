@@ -3,8 +3,23 @@ package com.swagriculture.swagriculture_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+
+import com.parse.entity.mime.MultipartEntity;
+import com.parse.entity.mime.content.StringBody;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 29-Jun-15.
@@ -29,16 +44,14 @@ public class QRScanner extends Activity{
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
 
         if (requestCode == 0) {
-            //TextView tvStatus=(TextView)findViewById(R.id.tvStatus);
-            TextView tvResult=(TextView)findViewById(R.id.QRResult);
             if (resultCode == RESULT_OK) {
-                //tvStatus.setText(intent.getStringExtra("SCAN_RESULT_FORMAT"));
-                tvResult.setText(intent.getStringExtra("SCAN_RESULT"));
-                //System.out.println(intent.getStringExtra("SCAN_RESULT"));
+                System.out.println("QR RESULT: " + intent.getStringExtra("SCAN_RESULT"));
+                new SendPostRequestTask().execute(intent.getStringExtra("SCAN_RESULT"));
             } else if (resultCode == RESULT_CANCELED) {
-                //tvStatus.setText("Press a button to start a scan.");
-                tvResult.setText("Scan cancelled.");
+                System.out.println("QR Result: sadness");
             }
         }
     }
+
+
 }
