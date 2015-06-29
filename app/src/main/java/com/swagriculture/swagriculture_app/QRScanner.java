@@ -3,8 +3,23 @@ package com.swagriculture.swagriculture_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+
+import com.parse.entity.mime.MultipartEntity;
+import com.parse.entity.mime.content.StringBody;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 29-Jun-15.
@@ -31,9 +46,12 @@ public class QRScanner extends Activity{
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 System.out.println("QR RESULT: " + intent.getStringExtra("SCAN_RESULT"));
+                new SendPostRequestTask().execute(intent.getStringExtra("SCAN_RESULT"));
             } else if (resultCode == RESULT_CANCELED) {
                 System.out.println("QR Result: sadness");
             }
         }
     }
+
+
 }
