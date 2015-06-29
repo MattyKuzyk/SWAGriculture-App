@@ -1,21 +1,55 @@
 package com.swagriculture.swagriculture_app;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationServices;
 
 
-public class MainActivity extends ActionBarActivity {
+
+
+public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener {
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+
     }
+
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            // Push logic goes here
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d("Connection", "Suspended");
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,5 +80,10 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, QRScanner.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d("Connection", "Failed");
     }
 }
