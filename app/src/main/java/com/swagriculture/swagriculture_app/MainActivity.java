@@ -9,13 +9,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
+import com.android.volley.toolbox.JsonObjectRequest;
 
-
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener {
@@ -36,12 +45,44 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 
     }
 
+    public void sendLocation(String longitude, String latitude) throws JSONException {
+        JSONObject data = new JSONObject();
+        data.put("trapId","0028DD0F");
+        data.put("longitude",longitude);
+        data.put("latitude",latitude);
+        data.put("name","Bestest Trap");
+        String url = "http://swagriculture.parseapp.com/trap";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, data,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley", "Error: " + error.getMessage());
+                // hide the progress dialog
+            }
+        });
+        queue.add(jsonObjReq);
+    }
+
 
     @Override
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             // Push logic goes here
+            try {
+                sendLocation(String.valueOf(mLastLocation.getLongitude()), String.valueOf(mLastLocation.getLatitude()));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
