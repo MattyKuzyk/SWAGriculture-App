@@ -27,70 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener {
-
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
+public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-
     }
-
-    public void sendLocation(String longitude, String latitude) throws JSONException {
-        JSONObject data = new JSONObject();
-        data.put("trapId","0028DD0F");
-        data.put("longitude",longitude);
-        data.put("latitude",latitude);
-        data.put("name","Bestest Trap");
-        String url = "http://swagriculture.parseapp.com/trap";
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, data,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Volley", response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Volley", "Error: " + error.getMessage());
-                // hide the progress dialog
-            }
-        });
-        queue.add(jsonObjReq);
-    }
-
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            // Push logic goes here
-            try {
-                sendLocation(String.valueOf(mLastLocation.getLongitude()), String.valueOf(mLastLocation.getLatitude()));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d("Connection", "Suspended");
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,10 +61,5 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         Intent intent = new Intent(this, QRScanner.class);
         startActivity(intent);
 
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("Connection", "Failed");
     }
 }
