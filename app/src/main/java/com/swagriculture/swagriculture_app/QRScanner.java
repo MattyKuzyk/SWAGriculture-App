@@ -17,22 +17,10 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.parse.entity.mime.MultipartEntity;
-import com.parse.entity.mime.content.StringBody;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by user on 29-Jun-15.
@@ -43,10 +31,13 @@ public class QRScanner extends Activity  implements GoogleApiClient.ConnectionCa
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
 
+    private String latitude;
+    private String longitude;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main); // Apparently I need this??
+
         Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         intent.putExtra("SCAN_MODE","QR_CODE_MODE");
         startActivityForResult(intent, 0);
@@ -57,28 +48,31 @@ public class QRScanner extends Activity  implements GoogleApiClient.ConnectionCa
                 .build();
         mGoogleApiClient.connect();
     }
-    private class HandleClick implements View.OnClickListener {
 
-
-        public void onClick(View view){
-
-        }
-    }
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
 
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 System.out.println("QR RESULT: " + intent.getStringExtra("SCAN_RESULT"));
-                new SendPostRequestTask().execute(intent.getStringExtra("SCAN_RESULT"));
+                if(mLastLocation != null){
+                    try{
+                        sendLocation(Double.toString(mLastLocation.getLongitude()),
+                                     Double.toString(mLastLocation.getLatitude()),
+                                     intent.getStringExtra("SCAN_RESULT"));
+                    } catch(JSONException e){
+                        System.out.println("Volley: send fail");
+                        e.printStackTrace();
+                    }
+                }
             } else if (resultCode == RESULT_CANCELED) {
                 System.out.println("QR Result: sadness");
             }
         }
     }
 
-    public void sendLocation(String longitude, String latitude) throws JSONException {
+    public void sendLocation(String longitude, String latitude, String trapId) throws JSONException {
         JSONObject data = new JSONObject();
-        data.put("trapId","0028DD0G");
+        data.put("trapId",trapId);
         data.put("longitude",longitude);
         data.put("latitude",latitude);
         data.put("name","Besterest Trap");
@@ -106,14 +100,16 @@ public class QRScanner extends Activity  implements GoogleApiClient.ConnectionCa
     @Override
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            // Push logic goes here
-            try {
-                sendLocation(String.valueOf(mLastLocation.getLongitude()), String.valueOf(mLastLocation.getLatitude()));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (mLastLocation != null) {
+//            // Push logic goes here
+//
+//            try {
+//                sendLocation(String.valueOf(mLastLocation.getLongitude()), String.valueOf(mLastLocation.getLatitude()));
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override
