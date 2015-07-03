@@ -68,6 +68,7 @@ public class QRScanner extends Activity  implements GoogleApiClient.ConnectionCa
                 System.out.println("QR Result: sadness");
             }
         }
+        finish();
     }
 
     public void sendLocation(String longitude, String latitude, String trapId) throws JSONException {
