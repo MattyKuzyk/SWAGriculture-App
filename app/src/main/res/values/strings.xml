@@ -4,4 +4,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="scan_qr">Scan QR</string>
+    <string name="trap_name">Enter trap name</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="blank"></string>
+    <string name="get_location">Get Location</string>
+    <string name="trap_id">Trap ID</string>
+    <string name="save_data">Save Trap Data</string>
 </resources>

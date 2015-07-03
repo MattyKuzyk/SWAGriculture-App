@@ -14,8 +14,10 @@
       IMPORTANT: Change "com.parse.tutorials.pushnotifications.permission.C2D_MESSAGE" in the lines below
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
+    <!--
     <permission android:protectionLevel="signature"
         android:name="com.swagriculture.swagriculture_app.permission.C2D_MESSAGE" />
+    -->
     <uses-permission android:name="com.swagriculture.swagriculture_app.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
@@ -38,6 +40,20 @@
             android:label="QRScanner" >
             <intent-filter>
                 <action android:name="android.intent.action.QRScanner" />
+            </intent-filter>
+        </activity>
+        <activity
+        android:name=".LocationService"
+        android:label="LocationService" >
+        <intent-filter>
+            <action android:name="android.intent.action.LocationService" />
+        </intent-filter>
+        </activity>
+        <activity
+            android:name=".PostRequestActivity"
+            android:label="PostRequestActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.PostRequestActivity" />
             </intent-filter>
         </activity>
         <service android:name="com.parse.PushService" />

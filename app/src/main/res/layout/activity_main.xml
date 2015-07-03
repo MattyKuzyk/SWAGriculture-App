@@ -6,15 +6,107 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
     <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scan_qr"
         android:id="@+id/QRButton"
+        android:onClick="scanQR"
+        android:layout_above="@+id/button2"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/trapName"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp"
+        android:hint="@string/trap_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/latitude"
+        android:id="@+id/latitudeText"
+        android:layout_below="@+id/trapName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/longitude"
+        android:id="@+id/longitudeText"
+        android:layout_below="@+id/latitudeText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/blank"
+        android:id="@+id/latitudeData"
+        android:layout_above="@+id/longitudeText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/blank"
+        android:id="@+id/longitudeData"
+        android:layout_alignBottom="@+id/longitudeText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_location"
+        android:id="@+id/button"
+        android:onClick="getLocation"
+        android:layout_above="@+id/QRButton"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/trap_id"
+        android:id="@+id/trapIdText"
+        android:layout_below="@+id/longitudeText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/blank"
+        android:id="@+id/trapIdData"
+        android:layout_alignBottom="@+id/trapIdText"
+        android:layout_alignRight="@+id/latitudeData"
+        android:layout_alignEnd="@+id/latitudeData" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_data"
+        android:id="@+id/button2"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="scanQR" />
+        android:onClick="sendPostRequest" />
 
 </RelativeLayout>
