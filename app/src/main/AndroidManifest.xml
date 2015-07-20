@@ -54,6 +54,13 @@
                 <action android:name="android.intent.action.PostRequestActivity" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TrapNameActivity"
+            android:label="TrapNameActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.TrapNameActivity" />
+            </intent-filter>
+        </activity>
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>

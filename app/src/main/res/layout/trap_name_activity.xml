@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/trapNameEditText"
+        android:layout_gravity="center_horizontal"
+        android:textSize="36sp"
+        android:hint="@string/trap_name" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="91dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ok_button"
+        android:id="@+id/button3"
+        android:onClick="okButtonCallback" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_button"
+        android:id="@+id/button4"
+        android:layout_gravity="right"
+        android:onClick="cancelButtonCallback" />
+</LinearLayout>

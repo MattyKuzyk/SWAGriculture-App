@@ -1,12 +1,12 @@
 package com.swagriculture.swagriculture_app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,6 +14,14 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
     private static int LOCATION_REQUEST_CODE = 1;
     private static int QR_SCAN_REQUEST_CODE = 2;
+    private static int TRAP_NAME_REQUEST_CODE = 3;
+    private static int POST_REQUEST_CODE = 4;
+
+    private String latitude = "";
+    private String longitude = "";
+    private String trapId = "";
+    private String trapName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,18 +81,40 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == LOCATION_REQUEST_CODE) {
-            TextView t;
-            t = (TextView) findViewById(R.id.latitudeData);
-            if (t != null) {
-                t.setText(data.getStringExtra("latitude"));
-            }
-            t = (TextView) findViewById(R.id.longitudeData);
-            if (t != null) {
-                t.setText(data.getStringExtra("longitude"));
-            }
+            latitude = data.getStringExtra("latitude");
+            longitude = data.getStringExtra("longitude");
+
+            // Bring up screen for user to enter trap name
+            Intent intent = new Intent(this, TrapNameActivity.class);
+            startActivityForResult(intent, TRAP_NAME_REQUEST_CODE);
         } else if(requestCode == QR_SCAN_REQUEST_CODE){
-            TextView t = (TextView) findViewById(R.id.trapIdData);
-            t.setText(data.getStringExtra("QRResult"));
+            trapId = data.getStringExtra("QRResult");
+
+            Intent intent = new Intent(this, LocationService.class);
+            startActivityForResult(intent, LOCATION_REQUEST_CODE);
+        } else if(requestCode == TRAP_NAME_REQUEST_CODE){
+            if(resultCode == Activity.RESULT_OK) {
+                trapName = data.getStringExtra("TrapName");
+
+                saveTrapData();
+            }
+        }
+    }
+    public void saveTrapData(){
+        if(!(trapName.equals("") || latitude.equals("") || longitude.equals("") || trapId.equals(""))){
+            // If all fields are non-blank
+            Intent intent = new Intent(this, PostRequestActivity.class);
+            intent.putExtra("name",trapName);
+            intent.putExtra("latitude",latitude);
+            intent.putExtra("longitude",longitude);
+            intent.putExtra("id",trapId);
+
+            startActivity(intent);
+
+            trapName = "";
+            latitude = "";
+            longitude = "";
+            trapId = "";
         }
     }
 }

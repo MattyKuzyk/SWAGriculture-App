@@ -11,4 +11,6 @@
     <string name="get_location">Get Location</string>
     <string name="trap_id">Trap ID</string>
     <string name="save_data">Save Trap Data</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
 </resources>
