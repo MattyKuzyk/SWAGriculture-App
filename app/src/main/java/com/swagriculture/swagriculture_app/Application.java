@@ -24,6 +24,7 @@ public class Application extends android.app.Application {
         // Initialize the Parse SDK.
 
         Parse.initialize(this, "eJMnNRD684vVSgW6aTjuwt6aOegfEf1C7xMuvDln", "QRBj9Kk21mYxG9czBV7K7uF7zfpCcucXSZKRlbOo");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
         // Specify an Activity to handle all pushes by default.
