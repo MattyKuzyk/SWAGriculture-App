@@ -15,7 +15,6 @@ public class MainActivity extends ActionBarActivity {
     private static int LOCATION_REQUEST_CODE = 1;
     private static int QR_SCAN_REQUEST_CODE = 2;
     private static int TRAP_NAME_REQUEST_CODE = 3;
-    private static int POST_REQUEST_CODE = 4;
 
     private String latitude = "";
     private String longitude = "";
@@ -59,25 +58,7 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, LocationService.class);
         startActivityForResult(intent, LOCATION_REQUEST_CODE);
     }
-    public void sendPostRequest(View view){
-        String name = ((EditText)findViewById(R.id.trapName)).getText().toString();
-        String latitude = ((TextView)findViewById(R.id.latitudeData)).getText().toString();
-        String longitude = ((TextView)findViewById(R.id.longitudeData)).getText().toString();
-        String id = ((TextView)findViewById(R.id.trapIdData)).getText().toString();
 
-        if(!(name.equals("") || latitude.equals("") || longitude.equals("") || id.equals(""))){
-            // If all fields are non-blank
-            Intent intent = new Intent(this, PostRequestActivity.class);
-            intent.putExtra("name",name);
-            intent.putExtra("latitude",latitude);
-            intent.putExtra("longitude",longitude);
-            intent.putExtra("id",id);
-
-            startActivity(intent);
-        } else {
-
-        }
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == LOCATION_REQUEST_CODE) {
@@ -108,6 +89,11 @@ public class MainActivity extends ActionBarActivity {
             intent.putExtra("latitude",latitude);
             intent.putExtra("longitude",longitude);
             intent.putExtra("id",trapId);
+
+            System.out.println("volley name: " + trapName);
+            System.out.println("volley latitude: " + latitude);
+            System.out.println("volley longitude: " + longitude);
+            System.out.println("volley id: " + trapId);
 
             startActivity(intent);
 
